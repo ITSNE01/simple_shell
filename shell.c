@@ -26,7 +26,7 @@ int main(void)
         fflush(stdout);
 
         /* Read the input command line */
-        input_len = getline(&input, &buffer_size, stdin);
+        input_len = getline(&input, &buffersize, stdin);
         if (input_len == -1) /* Handle end of input (Ctrl+D) */
         {
             printf("\n");
@@ -70,4 +70,3 @@ int main(void)
     free(input);
     return (0);
 }
-
