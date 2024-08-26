@@ -3,13 +3,14 @@
 /**
  * main - Entry point
  *
- * Description: Prints "Hello, I am a code that passes the Betty check."
- * 
- * Return: Always 0 (Success)
+ * Return: result (Success)
  */
 int main(void)
 {
-    printf("Hello, I am a code that passes the Betty check.\n");
-    return (0);
-}
+    int num1, num2;
 
+    num1 = 5;
+    num2 = 10;
+
+    return (num1 * num2);
+}
