@@ -70,4 +70,4 @@ int main(void)
 	/* Free allocated memory and exit */
 	free(input);
 	return (0);
-i}
+}
