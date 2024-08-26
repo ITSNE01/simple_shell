@@ -7,38 +7,38 @@
 extern char **environ;
 
 /**
- * main - Entry point of the shell
+ * main - Entry point of the Shell program
  *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t nread;
+    char *input = NULL;
+    size_t buffersize = 0;
+    ssize_t input_len;
     pid_t pid;
     int status;
 
     while (1)
     {
-        /* Display the prompt */
-        printf("#cisfun$ ");
+        /* Display shell prompt */
+        printf("$myshell> ");
         fflush(stdout);
 
         /* Read the input command line */
-        nread = getline(&line, &len, stdin);
-        if (nread == -1) /* Handle EOF (Ctrl+D) */
+        input_len = getline(&input, &buffer_size, stdin);
+        if (input_len == -1) /* Handle end of input (Ctrl+D) */
         {
             printf("\n");
             break;
         }
 
         /* Remove the newline character at the end */
-        if (nread > 0 && line[nread - 1] == '\n')
-            line[nread - 1] = '\0';
+        if (input_len > 0 && input[input_len - 1] == '\n')
+            input[input_len - 1] = '\0';
 
         /* If the input is empty, continue to the next iteration */
-        if (strcmp(line, "") == 0)
+        if (strcmp(input, "") == 0)
             continue;
 
         /* Fork a new process */
@@ -52,10 +52,10 @@ int main(void)
         else if (pid == 0)
         {
             /* Child process: execute the command */
-            char *argv[] = {line, NULL};
-            if (execve(line, argv, environ) == -1)
+            char *argv[] = {input, NULL};
+            if (execve(input, argv, environ) == -1)
             {
-                perror(line);
+                perror("Command execution failed");
                 exit(1);
             }
         }
@@ -67,7 +67,7 @@ int main(void)
     }
 
     /* Free allocated memory and exit */
-    free(line);
+    free(input);
     return (0);
 }
 
