@@ -22,7 +22,7 @@ int main(void)
 	while (1)
 	{
 		/* Display shell prompt */
-		printf("$myshell> ");
+		printf("#cisfun$ ");
 		fflush(stdout);
 
 		/* Read the input command line */
