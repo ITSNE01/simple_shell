@@ -1,4 +1,3 @@
-Nouveau ! Raccourcis clavier … Les raccourcis clavier de Drive ont été mis à jour pour vous permettre de naviguer à l'aide des premières lettres
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
