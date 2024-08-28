@@ -12,7 +12,7 @@ int _erratoi(char *s)
 	unsigned long int result = 0;
 
 	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
+		s++;  /* Skips the '+' sign if present at the beginning. */
 	for (i = 0;  s[i] != '\0'; i++)
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -20,17 +20,17 @@ int _erratoi(char *s)
 			result *= 10;
 			result += (s[i] - '0');
 			if (result > INT_MAX)
-				return (-1);
+				return (-1); /* result >> the max int value. */
 		}
 		else
-			return (-1);
+			return (-1); /* no non-numeric char is encountered. */
 	}
 	return (result);
 }
 
 /**
  * print_error - prints an error message
- * @info: the parameter & return info struct
+ * @info: Pointer to the info struct
  * @estr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
@@ -47,9 +47,9 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - function prints a decimal (integer) number (base 10)
- * @input: the input
- * @fd: the filedescriptor to write to
+ * print_d - prints a decimal (integer) number (base 10)
+ * @input: the int input to be printed
+ * @fd: the file descriptor to write to
  *
  * Return: number of characters printed
  */
@@ -59,7 +59,7 @@ int print_d(int input, int fd)
 	int i, count = 0;
 	unsigned int _abs_, current;
 
-	if (fd == STDERR_FILENO)
+	if (fd == STDERR_FILENO) /* Use _eputchar if printing to stderr */
 		__putchar = _eputchar;
 	if (input < 0)
 	{
@@ -86,10 +86,10 @@ int print_d(int input, int fd)
 }
 
 /**
- * convert_number - converter function, a clone of itoa
- * @num: number
- * @base: base
- * @flags: argument flags
+ * convert_number - Converts a number to a string in a specified base
+ * @num: number to be converted
+ * @base: base for conversion
+ * @flags: Flags that specify conversion options
  *
  * Return: string
  */
@@ -104,7 +104,7 @@ char *convert_number(long int num, int base, int flags)
 	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 	{
 		n = -num;
-		sign = '-';
+		sign = '-'; /* Set the sign for negative numbers. */
 
 	}
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
@@ -122,8 +122,8 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * remove_comments - Removes comments from a string
+ * @buf: Pointer to the string to modify
  *
  * Return: Always 0;
  */
@@ -132,9 +132,11 @@ void remove_comments(char *buf)
 	int i;
 
 	for (i = 0; buf[i] != '\0'; i++)
+	{
 		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			buf[i] = '\0';
+			buf[i] = '\0'; /* Terminate the string at 1st '#' found. */
 			break;
 		}
+	}
 }
