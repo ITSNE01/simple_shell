@@ -1,85 +1,62 @@
 #include "shell.h"
 
 /**
- * is_cmd - Checks if a file is an executable command.
- * @info: Pointer to the info structure.
- * @path: File path to check.
- *
- * Return: 1 if the file is executable, 0 otherwise.
+ **_memset - fills memory with a constant byte
+ *@s: the pointer to the memory area
+ *@b: the byte to fill *s with
+ *@n: the amount of bytes to be filled
+ *Return: (s) a pointer to the memory area s
  */
-int is_cmd(info_t *info, char *path)
+char *_memset(char *s, char b, unsigned int n)
 {
-	struct stat st;
+	unsigned int i;
 
-	(void)info;
-	if (!path || stat(path, &st))
-		return (0);
-
-	if (st.st_mode & S_IFREG)
-	{
-		return (1);
-	}
-	return (0);
-}
-/**
- * dup_chars - Duplicates characters from a string within a given range
- * @pathstr: The source string
- * @start: Starting index of the range to duplicate
- * @stop: Stopping index of the range to duplicate
- *
- * Return: A pointer to the duplicated string.
- */
-char *dup_chars(char *pathstr, int start, int stop)
-{
-	static char buf[1024];
-	int i = 0, k = 0;
-
-	for (k = 0, i = start; i < stop; i++)
-		if (pathstr[i] != ':')
-			buf[k++] = pathstr[i];
-	buf[k] = 0;
-	return (buf);
+	for (i = 0; i < n; i++)
+		s[i] = b;
+	return (s);
 }
 
 /**
- * find_path - finds this cmd in the PATH string
- * @info: Pointer to the info structure
- * @pathstr: the source string
- * @cmd: The command to find in the PATH
- *
- * Return: full path of cmd if found or NULL
+ * ffree - frees a string of strings
+ * @pp: string of strings
  */
-char *find_path(info_t *info, char *pathstr, char *cmd)
+void ffree(char **pp)
 {
-	int i = 0, curr_pos = 0;
-	char *path;
+	char **a = pp;
 
-	if (!pathstr)
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	free(a);
+}
+
+/**
+ * _realloc - reallocates a block of memory
+ * @ptr: pointer to previous malloc'ated block
+ * @old_size: byte size of previous block
+ * @new_size: byte size of new block
+ *
+ * Return: pointer to da ol'block nameen.
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	char *p;
+
+	if (!ptr)
+		return (malloc(new_size));
+	if (!new_size)
+		return (free(ptr), NULL);
+	if (new_size == old_size)
+		return (ptr);
+
+	p = malloc(new_size);
+	if (!p)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
-	{
-		if (is_cmd(info, cmd))
-			return (cmd);
-	}
-	while (1)
-	{
-		if (!pathstr[i] || pathstr[i] == ':')
-		{
-			path = dup_chars(pathstr, curr_pos, i);
-			if (!*path)
-				_strcat(path, cmd);
-			else
-			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
-			}
-			if (is_cmd(info, path))
-				return (path);
-			if (!pathstr[i])
-				break;
-			curr_pos = i;
-		}
-		i++;
-	}
-	return (NULL);
+
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
+	free(ptr);
+	return (p);
 }
