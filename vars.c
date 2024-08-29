@@ -1,4 +1,3 @@
-Nouveau ! Raccourcis clavier … Les raccourcis clavier de Drive ont été mis à jour pour vous permettre de naviguer à l'aide des premières lettres
 #include "shell.h"
 
 /**
