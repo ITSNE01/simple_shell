@@ -91,7 +91,7 @@ ssize_t get_input(info_t *info)
 
 /**
  * read_buf - reads a buffer from the input file descriptor
- * @info: pointer to info struct 
+ * @info: pointer to info struct
  * @buf: buffer to store the data read
  * @i: size of buffer
  *
