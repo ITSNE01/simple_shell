@@ -21,7 +21,14 @@ int is_cmd(info_t *info, char *path)
 	}
 	return (0);
 }
-
+/**
+ * dup_chars - Duplicates characters from a string within a given range
+ * @pathstr: The source string
+ * @start: Starting index of the range to duplicate
+ * @stop: Stopping index of the range to duplicate
+ *
+ * Return: A pointer to the duplicated string.
+ */
 char *dup_chars(char *pathstr, int start, int stop)
 {
 	static char buf[1024];
@@ -36,9 +43,9 @@ char *dup_chars(char *pathstr, int start, int stop)
 
 /**
  * find_path - finds this cmd in the PATH string
- * @info: the info struct
- * @pathstr: the PATH string
- * @cmd: the cmd to find
+ * @info: Pointer to the info structure
+ * @pathstr: the source string
+ * @cmd: The command to find in the PATH
  *
  * Return: full path of cmd if found or NULL
  */
