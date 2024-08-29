@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _myenv - prints the current environment
+ * _myenv - prints the current environment variables
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
@@ -13,11 +13,12 @@ int _myenv(info_t *info)
 }
 
 /**
- * _getenv - gets the value of an environ variable
+ * _getenv - Retrieves the value of an environment variable
  * @info: Structure containing potential arguments. Used to maintain
- * @name: env var name
+ *        a constant function prototype
+ * @name: Name of the environment variable to retrieve
  *
- * Return: the value
+ * Return: The value of the environment variable if found, NULL otherwise
  */
 char *_getenv(info_t *info, const char *name)
 {
@@ -35,11 +36,17 @@ char *_getenv(info_t *info, const char *name)
 }
 
 /**
- * _mysetenv - Initialize a new environment variable,
- *             or modify an existing one
+ * _mysetenv - Initializes a new environment variable,
+ *             or modifies an existing one
  * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ *        a constant function prototype
+ *  Return: 0 on success, 1 on failure
+ *
+ * This function expects exactly two arguments:
+ * - info->argv[1]: Name of the environment variable
+ * - info->argv[2]: Value of the environment variable
+ * It sets the environment variable by calling _setenv
+ * If the number of args is incorrect, it prints an error message
  */
 int _mysetenv(info_t *info)
 {
@@ -54,10 +61,15 @@ int _mysetenv(info_t *info)
 }
 
 /**
- * _myunsetenv - Remove an environment variable
+ * _myunsetenv - Removes an environment variable
  * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ *        a constant function prototype.
+ * Return: 0 on success, 1 on failure.
+ *
+ * This function expects at least one argument:
+ * - info->argv[1...n]: Names of the environment variables to remove
+ * It removes each specified environment variable by calling _unsetenv
+ * If no variables are specified, it prints an error message
  */
 int _myunsetenv(info_t *info)
 {
@@ -75,7 +87,7 @@ int _myunsetenv(info_t *info)
 }
 
 /**
- * populate_env_list - populates env linked list
+ * populate_env_list - Populates the environment linked list
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
